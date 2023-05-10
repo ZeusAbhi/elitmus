@@ -29,31 +29,35 @@ export const login = async (req: Request, res: Response) => {
 }
 
 export const register = async (req: Request, res: Response) => {
-  const { username, password } = req.body
-  if (!username || !password) {
-    return res.status(400).json({ error: 'Missing username or password' })
-  }
-  if (typeof username !== 'string' || typeof password !== 'string') {
-    return res.status(400).json({ error: 'Invalid username or password' })
-  }
-  const hashedPassword = await bcrypt.hash(password, process.env.SALT_ROUNDS || 10)
-  const user = await prisma.user.create({
-    data: {
-      username,
-      password: hashedPassword
+  try {
+    const { username, password } = req.body
+    if (!username || !password) {
+      return res.status(400).json({ error: 'Missing username or password' })
     }
-  })
-  // start puzzle 1
-  await prisma.userProgress.create({
-    data: {
-      userId: user.id,
-      success: false,
-      puzzleNum: 1,
-      startTime: new Date(),
+    if (typeof username !== 'string' || typeof password !== 'string') {
+      return res.status(400).json({ error: 'Invalid username or password' })
     }
-  })
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "secret")
-  return res.json({ token, username: user.username })
+    const hashedPassword = await bcrypt.hash(password, 10)
+    const user = await prisma.user.create({
+      data: {
+        username,
+        password: hashedPassword
+      }
+    })
+    // start puzzle 1
+    await prisma.userProgress.create({
+      data: {
+        userId: user.id,
+        success: false,
+        puzzleNum: 1,
+        startTime: new Date(),
+      }
+    })
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "secret")
+    return res.json({ token, username: user.username })
+  } catch (err) {
+    return res.status(400).json({ error: 'Username already exists' })
+  }
 }
 
 

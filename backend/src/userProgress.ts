@@ -83,7 +83,7 @@ export const adminPanelGetProgress = async (req: Request, res: Response) => {
       startTime: 'desc'
     },
     skip,
-    take: limit
+    take: limit,
   })
   return res.json(progress)
 }
