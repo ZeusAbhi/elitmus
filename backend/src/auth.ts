@@ -25,7 +25,13 @@ export const login = async (req: Request, res: Response) => {
     return res.status(401).json({ error: 'Password does not match' })
   }
   const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "secret")
-  return res.json({ token, username: user.username })
+  const userProgress = await prisma.userProgress.findFirst({
+    where: {
+      userId: user.id,
+      success: false,
+    }
+  })
+  return res.json({ token, username: user.username, puzzleNum: userProgress?.puzzleNum || 6 })
 }
 
 export const register = async (req: Request, res: Response) => {
@@ -54,7 +60,7 @@ export const register = async (req: Request, res: Response) => {
       }
     })
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "secret")
-    return res.json({ token, username: user.username })
+    return res.json({ token, username: user.username, puzzleNum: 1 })
   } catch (err) {
     return res.status(400).json({ error: 'Username already exists' })
   }
