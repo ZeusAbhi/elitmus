@@ -1,4 +1,5 @@
 import { prisma } from "./server"
+import { Request, Response } from "express"
 
 const leaderBoardForPuzzle = async (puzzleNum: number) => {
   const leaderboard = await prisma.userProgress.findMany({
@@ -27,7 +28,7 @@ const leaderBoardForPuzzle = async (puzzleNum: number) => {
   return result
 }
 
-export const topTen = async (req, res) => {
+export const topTen = async (req: Request, res: Response) => {
   const leaderboard: {
     [key: number]: {
       username: string,
