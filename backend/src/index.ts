@@ -1,6 +1,5 @@
-import { register } from "ts-node"
 import { app, prisma } from "./server"
-import { login, validateToken } from "./auth"
+import { login, register, validateToken } from "./auth"
 import { adminPanelGetProgress, getProgress, updateProgress } from "./userProgress"
 import { topTen } from "./leaderboard"
 
