@@ -56,9 +56,8 @@ export const register = async (req: Request, res: Response) => {
   return res.json({ token, username: user.username })
 }
 
-export type RequestWithUser = Request & { user: User }
 
-export const validateToken = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+export const validateToken = async (req: Request, res: Response, next: NextFunction) => {
   if (!req.headers.authorization) {
     return res.status(401).json({ error: 'Missing token' })
   }
@@ -76,7 +75,7 @@ export const validateToken = async (req: RequestWithUser, res: Response, next: N
     if (!user) {
       return res.status(404).json({ error: 'User not found' })
     }
-    req.user = user
+    (req as any).user = user
     next()
   } catch (err) {
     return res.status(401).json({ error: 'Invalid token' })

@@ -1,9 +1,9 @@
-import { RequestWithUser } from "./auth"
-import { Response } from "express"
 import { prisma } from "./server";
+import { User } from "@prisma/client";
+import { Request, Response } from "express"
 
-export const getProgress = async (req: RequestWithUser, res: Response) => {
-  const user = req.user;
+export const getProgress = async (req: Request, res: Response) => {
+  const user: User = (req as any).user;
   const progress = await prisma.userProgress.findMany({
     where: {
       userId: user.id
@@ -12,8 +12,8 @@ export const getProgress = async (req: RequestWithUser, res: Response) => {
   return res.json(progress)
 }
 
-export const updateProgress = async (req: RequestWithUser, res: Response) => {
-  const user = req.user;
+export const updateProgress = async (req: Request, res: Response) => {
+  const user: User = (req as any).user;
   const { puzzleNum } = req.body;
   if (!puzzleNum || typeof puzzleNum !== 'number' || puzzleNum < 1 || puzzleNum > 5) {
     return res.status(400).json({ error: 'Invalid puzzleNum' })
@@ -55,8 +55,9 @@ export const updateProgress = async (req: RequestWithUser, res: Response) => {
   return res.json(updatedProgress)
 }
 
-export const adminPanelGetProgress = async (req: RequestWithUser, res: Response) => {
-  if (!req.user.isAdmin) {
+export const adminPanelGetProgress = async (req: Request, res: Response) => {
+  const user = (req as any).user;
+  if (!user.isAdmin) {
     return res.status(401).json({ error: 'Unauthorized' })
   }
   const { userId, puzzleNum, page } = req.query;

@@ -16,8 +16,8 @@ app.get('/users', async (req, res) => {
 app.post('/users/register', register)
 app.post('/users/login', login)
 
-app.get('/users/progress', validateToken as any, getProgress as any)
-app.post('/users/progress', validateToken as any, updateProgress as any)
+app.get('/users/progress', validateToken, getProgress)
+app.post('/users/progress', validateToken, updateProgress)
 
 app.get('/leaderboard', topTen)
-app.get('/admin/progress', validateToken as any, adminPanelGetProgress as any)
+app.get('/admin/progress', validateToken, adminPanelGetProgress)
