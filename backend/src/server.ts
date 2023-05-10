@@ -9,7 +9,7 @@ app.use(express.json())
 
 export const PORT = process.env.PORT || 8080
 
-app.listen(3000, () =>
+app.listen(PORT, () =>
   console.log('Live on port: ' + PORT + ' 🚀')
 )
 export { app, prisma }
