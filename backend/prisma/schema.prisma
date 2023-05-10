@@ -9,8 +9,9 @@ datasource db {
 
 model User {
   id        Int      @id @default(autoincrement())
+  isAdmin   Boolean  @default(false)
   password  String
-  usernname String   @unique
+  username  String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -18,16 +19,17 @@ model User {
 }
 
 model UserProgress {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   userId    Int
-  clueNum   Int
+  puzzleNum Int
   success   Boolean
   startTime DateTime
-  endTime   DateTime
-  createdAt DateTime @default(now())
+  endTime   DateTime?
+  totalTime Int?
+  createdAt DateTime  @default(now())
 
   // User foreign key
   user User @relation(fields: [userId], references: [id])
 
-  @@unique([userId, clueNum])
+  @@unique([userId, puzzleNum])
 }

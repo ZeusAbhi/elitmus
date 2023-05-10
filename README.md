@@ -9,6 +9,11 @@
 
 [x] Auth and User schemas
 
+[ ] Login Page
+- Header
+- Footer
+- Shows just a login to get started
+
 [ ] Home Page
 - Header
 - Footer

@@ -42,7 +42,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       fetch(`${env.NEXT_PUBLIC_BACKENDURL}/user/login`, requestOptions)
         .then((response) => response.json())
         .then((resData) => {
-          // todo
+          if (!resData.token) {
+            if (resData.error) setError(resData.error);
+            else setError("Request Failed, please try again");
+          } else if (resData.token) {
+            if (typeof Storage !== "undefined") {
+              localStorage.setItem("token", resData.token);
+            }
+            setUser({
+              username: resData.username,
+              token: resData.token,
+            });
+            setError(null);
+          } else {
+            setError("Request Failed, please try again");
+          }
         });
     } catch (err) {
       setError("Request Failed, please try again");
@@ -67,13 +81,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const user = localStorage.getItem("user");
       if (!user) return;
       const { token } = JSON.parse(user);
-      if (!token) return;
       const parsedToken: any = jwt(token);
       if (parsedToken.exp < Date.now() / 1000) {
         logout();
         return;
       }
-      // TODO
     } catch (err) {
       setError("Your past login data is corrupted, please login again");
       logout();
@@ -98,14 +110,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         .then((response) => response.json())
         .then((resData) => {
           if (!resData.token) {
-            if (resData.message) setError(resData.message);
+            if (resData.error) setError(resData.error);
             else setError("Request Failed, please try again");
           } else if (resData.token) {
             if (typeof Storage !== "undefined") {
               localStorage.setItem("token", resData.token);
             }
             setUser({
-              username: username,
+              username: resData.username,
               token: resData.token,
             });
             setError(null);
