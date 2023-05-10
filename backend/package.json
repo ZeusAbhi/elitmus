@@ -2,10 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Backend for the elitmus puzzle project",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node index.ts",
-    "dev": "nodemon index.ts"
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon src/index.ts"
   },
   "author": "lohit244",
   "license": "MIT",
