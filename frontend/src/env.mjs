@@ -3,14 +3,14 @@ import { z } from "zod";
 
 export const env = createEnv({
   server: {
-    DATABASE_URL: z.string().url(),
+    BACKENDURL: z.string(),
   },
   client: {
-    NEXT_PUBLIC_PUBLISHABLE_KEY: z.string().min(1),
+    NEXT_PUBLIC_BACKENDURL: z.string(),
   },
   runtimeEnv: {
-    DATABASE_URL: process.env.DATABASE_URL,
-    NEXT_PUBLIC_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_PUBLISHABLE_KEY,
+    NEXT_PUBLIC_BACKENDURL: process.env.NEXT_PUBLIC_BACKENDURL,
+    BACKENDURL: process.env.BACKENDURL,
   },
 });
 
