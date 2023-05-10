@@ -5,6 +5,7 @@ import { env } from "@/env.mjs"
 type User = {
   username: string;
   token: string;
+  puzzleNum: number;
 };
 
 type AuthContextValue = {
@@ -39,20 +40,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       body: JSON.stringify({ username, password }),
     };
     try {
-      fetch(`${env.NEXT_PUBLIC_BACKENDURL}/user/login`, requestOptions)
+      fetch(`${env.NEXT_PUBLIC_BACKENDURL}/users/login`, requestOptions)
         .then((response) => response.json())
         .then((resData) => {
           if (!resData.token) {
             if (resData.error) setError(resData.error);
             else setError("Request Failed, please try again");
           } else if (resData.token) {
-            if (typeof Storage !== "undefined") {
-              localStorage.setItem("token", resData.token);
-            }
-            setUser({
+            const usr = {
               username: resData.username,
               token: resData.token,
-            });
+              puzzleNum: resData.puzzleNum,
+            }
+            if (typeof Storage !== "undefined") {
+              localStorage.setItem("user", JSON.stringify(usr));
+            }
+            setUser(usr);
             setError(null);
           } else {
             setError("Request Failed, please try again");
@@ -80,13 +83,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const user = localStorage.getItem("user");
       if (!user) return;
-      const { token } = JSON.parse(user);
+      const userObj = JSON.parse(user);
+      const token = userObj.token;
       const parsedToken: any = jwt(token);
       if (parsedToken.exp < Date.now() / 1000) {
         logout();
         return;
       }
+      setUser(userObj);
     } catch (err) {
+      console.log(err)
       setError("Your past login data is corrupted, please login again");
       logout();
     }
@@ -106,20 +112,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       body: JSON.stringify({ username, password }),
     };
     try {
-      fetch(`${env.NEXT_PUBLIC_BACKENDURL}/user/register`, requestOptions)
+      fetch(`${env.NEXT_PUBLIC_BACKENDURL}/users/register`, requestOptions)
         .then((response) => response.json())
         .then((resData) => {
           if (!resData.token) {
             if (resData.error) setError(resData.error);
             else setError("Request Failed, please try again");
           } else if (resData.token) {
-            if (typeof Storage !== "undefined") {
-              localStorage.setItem("token", resData.token);
-            }
-            setUser({
+            const usr = {
               username: resData.username,
               token: resData.token,
-            });
+              puzzleNum: resData.puzzleNum,
+            }
+            setUser(usr);
+            if (typeof Storage !== "undefined") {
+              localStorage.setItem("user", JSON.stringify(usr));
+            }
             setError(null);
           } else {
             setError("Request Failed, please try again");
