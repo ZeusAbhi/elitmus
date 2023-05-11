@@ -35,14 +35,9 @@ export const topTen = async (req: Request, res: Response) => {
       userId: number,
       totalTime: number
     }[]
-  } = {
-    1: [],
-    2: [],
-    3: [],
-    4: [],
-    5: []
-  }
-  for (let i = 1; i <= 5; i++) {
+  } = {}
+  const numPuzzles = await prisma.puzzle.count()
+  for (let i = 1; i <= numPuzzles; i++) {
     leaderboard[i] = await leaderBoardForPuzzle(i)
   }
   return res.json(leaderboard)

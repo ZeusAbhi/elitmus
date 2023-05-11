@@ -33,3 +33,8 @@ model UserProgress {
 
   @@unique([userId, puzzleNum])
 }
+
+model Puzzle {
+  id       Int    @id @default(autoincrement())
+  solution String
+}

@@ -14,45 +14,73 @@ export const getProgress = async (req: Request, res: Response) => {
 
 export const updateProgress = async (req: Request, res: Response) => {
   const user: User = (req as any).user;
-  const { puzzleNum } = req.body;
-  if (!puzzleNum || typeof puzzleNum !== 'number' || puzzleNum < 1 || puzzleNum > 5) {
-    return res.status(400).json({ error: 'Invalid puzzleNum' })
+  const { puzzleNum, status, answer } = req.body;
+  if (!puzzleNum || !status) {
+    return res.status(400).json({ error: "Missing fields" })
   }
-  const currentProgress = await prisma.userProgress.findFirst({
+  if (isNaN(Number(puzzleNum))) {
+    return res.status(400).json({ error: "Invalid puzzle number" })
+  }
+  if (status !== "answer" && status !== "start") {
+    return res.status(400).json({ error: "Invalid status" })
+  }
+  if (status === "answer" && !answer) {
+    return res.status(400).json({ error: "Missing answer" })
+  }
+
+  const puzzle = await prisma.puzzle.findFirst({
+    where: {
+      id: Number(puzzleNum)
+    }
+  })
+  if (!puzzle) {
+    return res.status(404).json({ error: "Puzzle not found" })
+  }
+  const progress = await prisma.userProgress.findFirst({
     where: {
       userId: user.id,
-      puzzleNum
+      puzzleNum: Number(puzzleNum)
     }
   })
-  if (!currentProgress) {
-    return res.status(404).json({ error: 'Progress not found' })
+
+  if (!progress && status === "answer") {
+    return res.status(400).json({ error: "You have not started this puzzle yet" })
   }
-  if (currentProgress.success) {
-    // already finished this puzzle
-    return res.status(400).json({ error: 'Already finished this puzzle' })
+  if (progress && progress.success === true) {
+    return res.status(400).json({ error: "You have already solved this puzzle" })
   }
-  const updatedProgress = await prisma.userProgress.update({
-    where: {
-      id: currentProgress.id
-    },
-    data: {
-      success: true,
-      endTime: new Date(),
-      totalTime: (new Date().getTime() - currentProgress.startTime.getTime())
+  if (progress && status === "start") {
+    return res.status(400).json({ error: "You have already started this puzzle" })
+  }
+  if (progress && progress.success === false && status === "answer") {
+    // compare answer
+    if (puzzle.solution !== answer.trim().toLowerCase()) {
+      return res.status(400).json({ error: "Incorrect answer" })
     }
-  })
-  // start next puzzle
-  if (puzzleNum < 5) {
+    await prisma.userProgress.update({
+      where: {
+        id: progress.id
+      },
+      data: {
+        success: true,
+        endTime: new Date(),
+        totalTime: Number(((new Date().getTime() - progress.startTime.getTime()) / 1000).toFixed(0))
+      }
+    })
+    return res.json({ success: true })
+  }
+  if (!progress && status === "start") {
     await prisma.userProgress.create({
       data: {
         userId: user.id,
-        success: false,
-        puzzleNum: puzzleNum + 1,
+        puzzleNum: Number(puzzleNum),
         startTime: new Date(),
+        success: false
       }
     })
+    return res.json({ success: true })
   }
-  return res.json(updatedProgress)
+  return res.status(400).json({ error: "Invalid request" })
 }
 
 export const adminPanelGetProgress = async (req: Request, res: Response) => {
@@ -85,5 +113,12 @@ export const adminPanelGetProgress = async (req: Request, res: Response) => {
     skip,
     take: limit,
   })
-  return res.json(progress)
+  const count = await prisma.userProgress.count({
+    where: queryObj
+  })
+  return res.json({
+    page: Number(page) || 1,
+    progress,
+    count: Math.ceil(count / limit)
+  })
 }

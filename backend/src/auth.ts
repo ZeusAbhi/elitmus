@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express'
 import { prisma } from "./server"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
-import { User } from '@prisma/client'
 
 export const login = async (req: Request, res: Response) => {
   const { username, password } = req.body
@@ -25,13 +24,7 @@ export const login = async (req: Request, res: Response) => {
     return res.status(401).json({ error: 'Password does not match' })
   }
   const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "secret")
-  const userProgress = await prisma.userProgress.findFirst({
-    where: {
-      userId: user.id,
-      success: false,
-    }
-  })
-  return res.json({ token, username: user.username, puzzleNum: userProgress?.puzzleNum || 6 })
+  return res.json({ token, username: user.username })
 }
 
 export const register = async (req: Request, res: Response) => {
@@ -50,17 +43,8 @@ export const register = async (req: Request, res: Response) => {
         password: hashedPassword
       }
     })
-    // start puzzle 1
-    await prisma.userProgress.create({
-      data: {
-        userId: user.id,
-        success: false,
-        puzzleNum: 1,
-        startTime: new Date(),
-      }
-    })
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "secret")
-    return res.json({ token, username: user.username, puzzleNum: 1 })
+    return res.json({ token, username: user.username })
   } catch (err) {
     return res.status(400).json({ error: 'Username already exists' })
   }
