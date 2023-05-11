@@ -5,23 +5,22 @@ import { env } from "@/env.mjs"
 type User = {
   username: string;
   token: string;
-  puzzleNum: number;
 };
 
 type AuthContextValue = {
   user: User | null;
   error: string | null;
-  login: (username: string, password: string) => void;
+  login: (username: string, password: string) => Promise<void>;
   logout: () => void;
-  register: (username: string, password: string) => void;
+  register: (username: string, password: string) => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue>({
   user: null,
   error: null,
-  login: () => { },
+  login: async () => { },
   logout: () => { },
-  register: () => { },
+  register: async () => { },
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -33,14 +32,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
    *
    * user object can be accessed from the `useAuth` hook's user property
    */
-  const login = (username: string, password: string) => {
+  const login = async (username: string, password: string) => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     };
     try {
-      fetch(`${env.NEXT_PUBLIC_BACKENDURL}/users/login`, requestOptions)
+      await fetch(`${env.NEXT_PUBLIC_BACKENDURL}/users/login`, requestOptions)
         .then((response) => response.json())
         .then((resData) => {
           if (!resData.token) {
@@ -50,7 +49,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             const usr = {
               username: resData.username,
               token: resData.token,
-              puzzleNum: resData.puzzleNum,
             }
             if (typeof Storage !== "undefined") {
               localStorage.setItem("user", JSON.stringify(usr));
@@ -86,6 +84,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const userObj = JSON.parse(user);
       const token = userObj.token;
       const parsedToken: any = jwt(token);
+      console.log(parsedToken)
       if (parsedToken.exp < Date.now() / 1000) {
         logout();
         return;
@@ -104,7 +103,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
    * It will also log the user in if the request is successful
    * and update the user object returned from the `useAuth` hook
    */
-  const register = (username: string, password: string) => {
+  const register = async (username: string, password: string) => {
     // TODO: data validation
     const requestOptions = {
       method: "POST",
@@ -112,7 +111,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       body: JSON.stringify({ username, password }),
     };
     try {
-      fetch(`${env.NEXT_PUBLIC_BACKENDURL}/users/register`, requestOptions)
+      await fetch(`${env.NEXT_PUBLIC_BACKENDURL}/users/register`, requestOptions)
         .then((response) => response.json())
         .then((resData) => {
           if (!resData.token) {
@@ -122,7 +121,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             const usr = {
               username: resData.username,
               token: resData.token,
-              puzzleNum: resData.puzzleNum,
             }
             setUser(usr);
             if (typeof Storage !== "undefined") {
