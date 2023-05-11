@@ -6,26 +6,41 @@ type User = {
   username: string;
   token: string;
 };
+type UserProgress = {
+  id: number,
+  userId: number,
+  puzzleNum: number,
+  success: boolean,
+  startTime: Date,
+  endTime: Date | null,
+  totalTime: number | null,
+  createdAt: Date
+}[];
 
 type AuthContextValue = {
   user: User | null;
+  userProgress: UserProgress | null;
   error: string | null;
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
   register: (username: string, password: string) => Promise<void>;
+  refetchUserProgress: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue>({
   user: null,
+  userProgress: null,
   error: null,
   login: async () => { },
   logout: () => { },
   register: async () => { },
+  refetchUserProgress: async () => { },
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [userProgress, setUserProgress] = useState<[] | null>(null)
 
   /**
    * Pass in the username, password and type of user to login.
@@ -90,12 +105,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
       setUser(userObj);
+      // this will also ensure that the token is correct
+      refetchUserProgress();
     } catch (err) {
       console.log(err)
       setError("Your past login data is corrupted, please login again");
       logout();
     }
   }, []);
+
+
 
   /**
    * Register a new user.
@@ -136,12 +155,39 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  /**
+  * Update the user's progress from the backend
+  * and update the userProgress object returned from the `useAuth` hook
+  */
+  const refetchUserProgress = async () => {
+    if (!user) return;
+    await fetch(`${env.NEXT_PUBLIC_BACKENDURL}/users/progress`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${user.token}`
+      }
+    }).then(res => res.json()).then(res => {
+      if (res.error) {
+        setError(res.error)
+        logout()
+      } else {
+        setUserProgress(res)
+      }
+    }).catch(_err => {
+      setError("Login Failed, please try again");
+      logout();
+    })
+  }
+
   const authContextValue = {
     user,
+    userProgress,
     error,
     login,
     logout,
     register,
+    refetchUserProgress
   };
 
   return (

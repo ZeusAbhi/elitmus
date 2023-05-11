@@ -4,7 +4,7 @@ import Link from "next/link"
 export default function Header() {
   const { user, logout } = useAuth()
   return (
-    <header className="flex flex-row px-2 bg-blue-100/50 text-blue-800 py-3 border-b border-blue-300">
+    <header className="flex flex-row md:px-4 px-2 bg-blue-100/50 text-blue-800 py-3 border-b border-blue-300">
       <div className="flex flex-1 items-center">
         <Link href="/">
           <h1 className="text-xl font-semibold">Puzzle Hunt</h1>
