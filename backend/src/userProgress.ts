@@ -70,6 +70,18 @@ export const updateProgress = async (req: Request, res: Response) => {
     return res.json({ success: true })
   }
   if (!progress && status === "start") {
+    if (puzzleNum > 1) {
+      // ensure the prev puzzle is done
+      const prevProgress = await prisma.userProgress.findFirst({
+        where: {
+          userId: user.id,
+          puzzleNum: (Number(puzzleNum) - 1),
+        }
+      })
+      if (!prevProgress || prevProgress.success) {
+        return res.json({ error: "You have not solved the previous puzzle" });
+      }
+    }
     await prisma.userProgress.create({
       data: {
         userId: user.id,
