@@ -23,7 +23,9 @@ export const login = async (req: Request, res: Response) => {
   if (!passwordMatch) {
     return res.status(401).json({ error: 'Password does not match' })
   }
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "secret")
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "secret", {
+    expiresIn: "7d"
+  })
   return res.json({ token, username: user.username })
 }
 
@@ -43,7 +45,9 @@ export const register = async (req: Request, res: Response) => {
         password: hashedPassword
       }
     })
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "secret")
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "secret", {
+      expiresIn: "7d"
+    })
     return res.json({ token, username: user.username })
   } catch (err) {
     return res.status(400).json({ error: 'Username already exists' })
