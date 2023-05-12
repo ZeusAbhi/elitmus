@@ -11,11 +11,14 @@ export default function Login() {
       router.push('/dashboard')
     }, 2000)
     return <div className="h-screen w-full text-bold flex items-center justify-center">
-      <p>
-        You are logged in.
-        <br />
-        Redirecting to dashboard.
-      </p>
+      <div>
+        <p>
+          You are logged in.
+          <br />
+          Redirecting to dashboard.
+        </p>
+        <Spinner />
+      </div>
     </div>
   }
 

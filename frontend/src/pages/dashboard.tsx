@@ -2,8 +2,8 @@ import PuzzleCard from "@/components/PuzzleCard"
 import { useAuth } from "@/context/authContext"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { env } from "@/env.mjs"
 import { puzzles } from "@/puzzles"
+import { Spinner } from "@/components/Spinner"
 
 export default function Dashboard() {
   const { user, userProgress, logout, refetchUserProgress } = useAuth()
@@ -33,19 +33,23 @@ export default function Dashboard() {
 
   if (loading || !userProgress || !user) {
     if (!user) {
-      return <div className="flex h-screen w-full items-center justify-center">
-        <p>Please login.<br /> Redirecting to login page...</p>
+      return <div className="flex flex-col h-screen w-full items-center justify-center">
+        <p>Please login.<br /> </p>
+        <p className="animate-pulse">Redirecting to login page...</p>
       </div>
     }
     return <div className="flex h-screen w-full items-center justify-center">
-      <p>Loading...</p>
+      <div>
+        <p>Loading...</p>
+        <Spinner />
+      </div>
     </div>
   }
 
 
   return <div>
     <h1 className="mt-8 mx-2 text-2xl break-words mb-4">Welcome <b>{user.username}</b></h1>
-    <div className="flex flex-col w-full justify-center mx-2 gap-4 mb-4">
+    <div className="flex flex-col justify-center mx-2 gap-4 mb-4">
       {
         puzzles.map((puzzle) => <PuzzleCard puzzle={{
           ...puzzle,
