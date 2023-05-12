@@ -17,7 +17,7 @@ export default function PuzzleCard({ puzzle }: { puzzle: PuzzleCardType }) {
           {puzzle.shortDescription}
         </div>
       </div>
-      <Link href={`/puzzles/${puzzle.id}`}>
+      <Link href={`/puzzle/${puzzle.id}`}>
         <div className={`${puzzle.active ? "bg-green-400 hover:bg-green-500" : "bg-blue-400 hover:bg-blue-500"} transition-colors p-2 text-white font-mono font-bold rounded-md mt-2 sm:mt-0`}>
           Go
         </div>
