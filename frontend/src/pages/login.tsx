@@ -70,86 +70,88 @@ export default function Login() {
   };
 
   return (
-    <div className="fixed -z-10 inset-0 overflow-y-auto bg-slate-100 backdrop-brightness-90 text-gray-600" >
+    <>
       {error && <div className="bg-red-500 text-white flex justify-center break-words text-center">{error}</div>}
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="w-full bg-white bg max-w-sm p-6 rounded-lg shadow-md">
-          <div className="gap-2 mb-4 flex flex-col items-center">
-            <div className="w-full px-2 flex">
+      <div className="fixed -z-10 inset-0 overflow-y-auto bg-slate-100 backdrop-brightness-90 text-gray-600" >
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="w-full bg-white bg max-w-sm p-6 rounded-lg shadow-md">
+            <div className="gap-2 mb-4 flex flex-col items-center">
+              <div className="w-full px-2 flex">
+              </div>
+              <ul className="flex flex-1 w-full">
+                <li
+                  className={`flex-1 py-1 text-center cursor-pointer ${activeTab === "login" ? "text-blue-500 bg-gray-100" : ""
+                    }`}
+                  onClick={() => handleTabChange("login")}
+                >
+                  Login
+                </li>
+                <li
+                  className={`flex-1 py-1 text-center cursor-pointer ${activeTab === "register" ? "text-blue-500 bg-gray-100" : ""
+                    }`}
+                  onClick={() => handleTabChange("register")}
+                >
+                  Register
+                </li>
+              </ul>
             </div>
-            <ul className="flex flex-1 w-full">
-              <li
-                className={`flex-1 py-1 text-center cursor-pointer ${activeTab === "login" ? "text-blue-500 bg-gray-100" : ""
-                  }`}
-                onClick={() => handleTabChange("login")}
-              >
-                Login
-              </li>
-              <li
-                className={`flex-1 py-1 text-center cursor-pointer ${activeTab === "register" ? "text-blue-500 bg-gray-100" : ""
-                  }`}
-                onClick={() => handleTabChange("register")}
-              >
-                Register
-              </li>
-            </ul>
+            {activeTab === "login" ? (
+              <form onSubmit={handleLoginSubmit} className="text-black">
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  className="w-full mb-2 p-2 rounded-md focus:outline-none"
+                  value={loginForm.username}
+                  onChange={handleLoginInputChange}
+                />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  className="w-full mb-2 p-2 rounded-md focus:outline-none"
+                  value={loginForm.password}
+                  onChange={handleLoginInputChange}
+                />
+                <button
+                  type="submit"
+                  className={`w-full py-2 px-4 text-white ${loading ? "bg-gray-500 hover:bg-gray-600" : "bg-blue-500 hover:bg-blue-600"} rounded-md focus:outline-none`}
+                  disabled={loading}
+                >
+                  {loading ? <Spinner /> : "Login"}
+                </button>
+              </form>
+            ) : (
+              <form onSubmit={handleRegisterSubmit} className="text-black">
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  className="w-full mb-2 p-2 rounded-md focus:outline-none"
+                  value={registerForm.username}
+                  onChange={handleRegisterInputChange}
+                />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  className="w-full mb-2 p-2 rounded-md focus:outline-none"
+                  value={registerForm.password}
+                  onChange={handleRegisterInputChange}
+                />
+                <button
+                  type="submit"
+                  className={`w-full py-2 px-4 text-white ${loading ? "bg-gray-500 hover:bg-gray-600" : "bg-blue-500 hover:bg-blue-600"} rounded-md focus:outline-none`}
+                  disabled={loading}
+                >
+                  {loading ? <Spinner /> : "Register"}
+                </button>
+              </form>
+            )}
           </div>
-          {activeTab === "login" ? (
-            <form onSubmit={handleLoginSubmit} className="text-black">
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                className="w-full mb-2 p-2 rounded-md focus:outline-none"
-                value={loginForm.username}
-                onChange={handleLoginInputChange}
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                className="w-full mb-2 p-2 rounded-md focus:outline-none"
-                value={loginForm.password}
-                onChange={handleLoginInputChange}
-              />
-              <button
-                type="submit"
-                className={`w-full py-2 px-4 text-white ${loading ? "bg-gray-500 hover:bg-gray-600" : "bg-blue-500 hover:bg-blue-600"} rounded-md focus:outline-none`}
-                disabled={loading}
-              >
-                {loading ? <Spinner /> : "Login"}
-              </button>
-            </form>
-          ) : (
-            <form onSubmit={handleRegisterSubmit} className="text-black">
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                className="w-full mb-2 p-2 rounded-md focus:outline-none"
-                value={registerForm.username}
-                onChange={handleRegisterInputChange}
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                className="w-full mb-2 p-2 rounded-md focus:outline-none"
-                value={registerForm.password}
-                onChange={handleRegisterInputChange}
-              />
-              <button
-                type="submit"
-                className={`w-full py-2 px-4 text-white ${loading ? "bg-gray-500 hover:bg-gray-600" : "bg-blue-500 hover:bg-blue-600"} rounded-md focus:outline-none`}
-                disabled={loading}
-              >
-                {loading ? <Spinner /> : "Register"}
-              </button>
-            </form>
-          )}
         </div>
-      </div>
-    </div >
+      </div >
+    </>
   );
 }
 
