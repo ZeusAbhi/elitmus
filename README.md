@@ -9,7 +9,7 @@
 
 [x] Auth and User schemas
 
-[ ] Login Page
+[x] Login Page
 - Header
 - Footer
 - Shows just a login to get started
@@ -19,7 +19,7 @@
 - Footer
 - Shows just a login to get started
 
-[ ] Dashboard Page
+[x] Dashboard Page
 - List of puzzles and continue/start button
 
 [ ] Puzzle Generalised page and components
@@ -35,7 +35,7 @@
 
 [ ] Animations
 
-[ ] 
+[ ] Titles for each page
 
 ## Problem Statement
 

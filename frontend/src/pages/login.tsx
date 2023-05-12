@@ -6,22 +6,6 @@ import { useState } from "react";
 export default function Login() {
   const { user, error, login, register } = useAuth();
   const router = useRouter()
-  if (user) {
-    setTimeout(() => {
-      router.push('/dashboard')
-    }, 2000)
-    return <div className="h-screen w-full text-bold flex items-center justify-center">
-      <div>
-        <p>
-          You are logged in.
-          <br />
-          Redirecting to dashboard.
-        </p>
-        <Spinner />
-      </div>
-    </div>
-  }
-
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
   const [loading, setLoading] = useState(false);
   const [loginForm, setLoginForm] = useState<{
@@ -40,6 +24,21 @@ export default function Login() {
     username: "",
   });
 
+  if (user) {
+    setTimeout(() => {
+      router.push('/dashboard')
+    }, 2000)
+    return <div className="h-screen w-full text-bold flex items-center justify-center">
+      <div>
+        <p>
+          You are logged in.
+          <br />
+          Redirecting to dashboard.
+        </p>
+        <Spinner />
+      </div>
+    </div>
+  }
   const handleTabChange = (tab: "login" | "register") => {
     setActiveTab(tab);
   };
@@ -71,7 +70,7 @@ export default function Login() {
   };
 
   return (
-    <div className="z-10 inset-0 overflow-y-auto bg-gray-100 backdrop-brightness-90 text-gray-600" >
+    <div className="fixed -z-10 inset-0 overflow-y-auto bg-slate-100 backdrop-brightness-90 text-gray-600" >
       {error && <div className="bg-red-500 text-white flex justify-center break-words text-center">{error}</div>}
       <div className="flex items-center justify-center min-h-screen">
         <div className="w-full bg-white bg max-w-sm p-6 rounded-lg shadow-md">
