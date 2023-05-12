@@ -51,7 +51,7 @@ export default function Dashboard() {
     <h1 className="mt-8 mx-2 text-2xl break-words mb-4">Welcome <b>{user.username}</b></h1>
     <div className="flex flex-col justify-center mx-2 gap-4 mb-4">
       {
-        puzzles.map((puzzle) => <PuzzleCard puzzle={{
+        puzzles.map((puzzle) => <PuzzleCard key={puzzle.id} puzzle={{
           ...puzzle,
           active: userProgress[puzzle.id - 1]?.success
         }} />
