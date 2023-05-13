@@ -3,8 +3,12 @@
 // Don't forget to take breaks and have fun! As you can see, the company is growing quickly, and we need to hire more people to keep up with the demand. You'll
 // be tasked with a lot of things, but You'll do great!
 
-export default function PuzzleOne() {
-  return <div>
+import PuzzleContainer from "@/components/PuzzleContainer"
+import { useAuth } from "@/context/authContext"
 
-  </div>
+export default function PuzzleOne() {
+  const { user, userProgress, logout, refetchUserProgress } = useAuth()
+  return <PuzzleContainer puzzleNum={1}>
+
+  </PuzzleContainer>
 }
