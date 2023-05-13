@@ -36,7 +36,7 @@ export default function Dashboard() {
     if (!user) {
       return <div className="flex flex-col h-screen w-full items-center justify-center">
         <p>Please login.<br /> </p>
-        <p className="animate-pulse">Redirecting to login page...</p>
+        <p>Redirecting to login page...</p>
       </div>
     }
     return <div className="flex h-screen w-full items-center justify-center">

@@ -14,7 +14,7 @@ export default function Header() {
   }, [router])
   return (
     <>
-      <header className="hidden sm:flex flex-row md:px-4 px-2 bg-slate-700 text-white py-3 m-2 rounded-md shadow-md shadow-slate-300">
+      <header className="hidden sm:flex flex-row md:px-4 px-2 bg-slate-800 text-white py-3 m-2 rounded-md shadow-md shadow-slate-300">
         <div className="flex flex-1 items-center">
           <Link href="/">
             <h1 className="text-xl font-semibold">Puzzle Hunt</h1>
