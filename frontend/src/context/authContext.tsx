@@ -93,13 +93,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // get data from token
   useEffect(() => {
     if (typeof Storage === "undefined") return;
+    if (user) {
+      refetchUserProgress();
+      return;
+    }
     try {
       const user = localStorage.getItem("user");
       if (!user) return;
       const userObj = JSON.parse(user);
       const token = userObj.token;
       const parsedToken: any = jwt(token);
-      console.log(parsedToken)
       if (parsedToken.exp < Date.now() / 1000) {
         logout();
         return;
@@ -108,11 +111,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // this will also ensure that the token is correct
       refetchUserProgress();
     } catch (err) {
-      console.log(err)
       setError("Your past login data is corrupted, please login again");
       logout();
     }
-  }, []);
+  }, [user]);
 
 
 

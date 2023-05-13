@@ -11,7 +11,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    let t: any;
+    let t: NodeJS.Timeout;
     if (!user) {
       t = setTimeout(() => {
         router.push('/login')
@@ -26,9 +26,10 @@ export default function Dashboard() {
       })
     }
     return () => {
+      if (!t) return;
       clearTimeout(t)
     }
-  }, [user])
+  }, [user, router])
 
 
   if (loading || !userProgress || !user) {
@@ -48,8 +49,8 @@ export default function Dashboard() {
 
 
   return <div>
-    <h1 className="mt-8 mx-2 text-2xl break-words mb-4">Welcome <b>{user.username}</b></h1>
-    <div className="flex flex-col justify-center mx-2 gap-4 mb-4">
+    <h1 className="mt-4 mx-2 text-2xl break-words mb-8">Welcome <b>{user.username}</b></h1>
+    <div className="flex flex-col justify-center mx-2 gap-4 mb-4 items-center">
       {
         puzzles.map((puzzle) => <PuzzleCard key={puzzle.id} puzzle={{
           ...puzzle,

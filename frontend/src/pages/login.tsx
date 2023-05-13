@@ -71,23 +71,21 @@ export default function Login() {
 
   return (
     <>
-      {error && <div className="bg-red-500 text-white flex justify-center break-words text-center">{error}</div>}
-      <div className="fixed -z-10 inset-0 overflow-y-auto bg-slate-100 backdrop-brightness-90 text-gray-600" >
+      <div className="-z-10 inset-0 overflow-y-auto bg-slate-100 backdrop-brightness-90 text-gray-600" >
+        {error && <div className="bg-red-500 text-white flex justify-center break-words text-center">{error}</div>}
         <div className="flex items-center justify-center min-h-screen">
-          <div className="w-full bg-white bg max-w-sm p-6 rounded-lg shadow-md">
+          <div className="w-full bg-white bg max-w-sm p-6 rounded-lg shadow-md mx-2">
             <div className="gap-2 mb-4 flex flex-col items-center">
-              <div className="w-full px-2 flex">
-              </div>
               <ul className="flex flex-1 w-full">
                 <li
-                  className={`flex-1 py-1 text-center cursor-pointer ${activeTab === "login" ? "text-blue-500 bg-gray-100" : ""
+                  className={`flex-1 py-1 text-center cursor-pointer ${activeTab === "login" ? "text-slate-500 bg-gray-100" : ""
                     }`}
                   onClick={() => handleTabChange("login")}
                 >
                   Login
                 </li>
                 <li
-                  className={`flex-1 py-1 text-center cursor-pointer ${activeTab === "register" ? "text-blue-500 bg-gray-100" : ""
+                  className={`flex-1 py-1 text-center cursor-pointer ${activeTab === "register" ? "text-slate-500 bg-gray-100" : ""
                     }`}
                   onClick={() => handleTabChange("register")}
                 >
@@ -115,7 +113,7 @@ export default function Login() {
                 />
                 <button
                   type="submit"
-                  className={`w-full py-2 px-4 text-white ${loading ? "bg-gray-500 hover:bg-gray-600" : "bg-blue-500 hover:bg-blue-600"} rounded-md focus:outline-none`}
+                  className={`transition-colors w-full py-2 px-4 text-white ${loading ? "bg-slate-100 hover:bg-slate-200" : "bg-slate-500 hover:bg-slate-600"} rounded-md focus:outline-none`}
                   disabled={loading}
                 >
                   {loading ? <Spinner /> : "Login"}
@@ -141,7 +139,7 @@ export default function Login() {
                 />
                 <button
                   type="submit"
-                  className={`w-full py-2 px-4 text-white ${loading ? "bg-gray-500 hover:bg-gray-600" : "bg-blue-500 hover:bg-blue-600"} rounded-md focus:outline-none`}
+                  className={`transition-colors w-full py-2 px-4 text-white ${loading ? "bg-slate-100 hover:bg-slate-200" : "bg-slate-500 hover:bg-slate-600"} rounded-md focus:outline-none`}
                   disabled={loading}
                 >
                   {loading ? <Spinner /> : "Register"}
