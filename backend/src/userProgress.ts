@@ -82,15 +82,19 @@ export const updateProgress = async (req: Request, res: Response) => {
         return res.json({ error: "You have not solved the previous puzzle" });
       }
     }
-    await prisma.userProgress.create({
-      data: {
-        userId: user.id,
-        puzzleNum: Number(puzzleNum),
-        startTime: new Date(),
-        success: false
-      }
-    })
-    return res.json({ success: true })
+    try {
+      await prisma.userProgress.create({
+        data: {
+          userId: user.id,
+          puzzleNum: Number(puzzleNum),
+          startTime: new Date(),
+          success: false
+        }
+      })
+      return res.json({ success: true })
+    } catch (err) {
+      return res.status(500).json({ error: "Something went wrong" });
+    }
   }
   return res.status(400).json({ error: "Invalid request" })
 }
