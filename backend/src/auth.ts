@@ -4,13 +4,14 @@ import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 
 export const login = async (req: Request, res: Response) => {
-  const { username, password } = req.body
+  let { username, password } = req.body
   if (!username || !password) {
     return res.status(400).json({ error: 'Missing username or password' })
   }
   if (typeof username !== 'string' || typeof password !== 'string') {
     return res.status(400).json({ error: 'Invalid username or password' })
   }
+  username = username.toLowerCase();
   const user = await prisma.user.findUnique({
     where: {
       username
@@ -31,13 +32,14 @@ export const login = async (req: Request, res: Response) => {
 
 export const register = async (req: Request, res: Response) => {
   try {
-    const { username, password } = req.body
+    let { username, password } = req.body
     if (!username || !password) {
       return res.status(400).json({ error: 'Missing username or password' })
     }
     if (typeof username !== 'string' || typeof password !== 'string') {
       return res.status(400).json({ error: 'Invalid username or password' })
     }
+    username = username.toLowerCase();
     const hashedPassword = await bcrypt.hash(password, 10)
     const user = await prisma.user.create({
       data: {
