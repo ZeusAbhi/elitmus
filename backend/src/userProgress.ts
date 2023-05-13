@@ -78,7 +78,7 @@ export const updateProgress = async (req: Request, res: Response) => {
           puzzleNum: (Number(puzzleNum) - 1),
         }
       })
-      if (!prevProgress || prevProgress.success) {
+      if (!prevProgress || !prevProgress.success) {
         return res.json({ error: "You have not solved the previous puzzle" });
       }
     }
