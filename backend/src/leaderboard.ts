@@ -1,44 +1,18 @@
 import { prisma } from "./server"
 import { Request, Response } from "express"
 
-const leaderBoardForPuzzle = async (puzzleNum: number) => {
-  const leaderboard = await prisma.userProgress.findMany({
-    where: {
-      puzzleNum,
-      success: true
+
+export const topTen = async (req: Request, res: Response) => {
+  const users = await prisma.user.findMany({
+    take: 10,
+    select: {
+      username: true,
+      totalTime: true,
     },
     orderBy: {
       totalTime: 'asc'
-    },
-    take: 10
+    }
   })
-  const result: Array<{ username: string, userId: number, totalTime: number }> = []
-  for (const entry of leaderboard) {
-    const user = await prisma.user.findFirst({
-      where: {
-        id: entry.userId
-      }
-    })
-    result.push({
-      username: user!.username,
-      userId: user!.id,
-      totalTime: entry.totalTime!
-    })
-  }
-  return result
-}
 
-export const topTen = async (req: Request, res: Response) => {
-  const leaderboard: {
-    [key: number]: {
-      username: string,
-      userId: number,
-      totalTime: number
-    }[]
-  } = {}
-  const numPuzzles = await prisma.puzzle.count()
-  for (let i = 1; i <= numPuzzles; i++) {
-    leaderboard[i] = await leaderBoardForPuzzle(i)
-  }
-  return res.json(leaderboard)
+  return res.json(users)
 }

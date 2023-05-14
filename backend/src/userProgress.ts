@@ -1,31 +1,23 @@
 import { prisma } from "./server";
 import { User } from "@prisma/client";
 import { Request, Response } from "express"
+import { stringHash } from "./hashFunct";
 
 export const getProgress = async (req: Request, res: Response) => {
   const user: User = (req as any).user;
-  const progress = await prisma.userProgress.findMany({
-    where: {
-      userId: user.id
-    }
+  return res.json({
+    completed: user.endAt !== null,
+    progress: user.endAt || 0,
   })
-  return res.json(progress)
 }
 
 export const updateProgress = async (req: Request, res: Response) => {
-  const user: User = (req as any).user;
-  const { puzzleNum, status, answer } = req.body;
-  if (!puzzleNum || !status) {
-    return res.status(400).json({ error: "Missing fields" })
+  const { puzzleNum, answer } = req.body;
+  if (!puzzleNum || !answer) {
+    return res.status(400).json({ error: "Missing puzzleNum or answer" })
   }
   if (isNaN(Number(puzzleNum))) {
-    return res.status(400).json({ error: "Invalid puzzle number" })
-  }
-  if (status !== "answer" && status !== "start") {
-    return res.status(400).json({ error: "Invalid status" })
-  }
-  if (status === "answer" && !answer) {
-    return res.status(400).json({ error: "Missing answer" })
+    return res.status(400).json({ error: "Invalid puzzleNum" })
   }
 
   const puzzle = await prisma.puzzle.findFirst({
@@ -33,87 +25,67 @@ export const updateProgress = async (req: Request, res: Response) => {
       id: Number(puzzleNum)
     }
   })
+
   if (!puzzle) {
     return res.status(404).json({ error: "Puzzle not found" })
   }
-  const progress = await prisma.userProgress.findFirst({
-    where: {
-      userId: user.id,
-      puzzleNum: Number(puzzleNum)
+  if (puzzle.solution === answer.toLowerCase().trim()) {
+    return res.status(200).json({ key: puzzle.key })
+  }
+  return res.status(200).json({ key: stringHash(answer) })
+}
+
+export const finalAnswer = async (req: Request, res: Response) => {
+  const user: User = (req as any).user;
+  if (user.endAt !== null) {
+    return res.status(400).json({ error: "Already completed" })
+  }
+  const { answer } = req.body;
+  if (!answer) {
+    return res.status(400).json({ error: "Missing answer" })
+  }
+  const puzzles = await prisma.puzzle.findMany({
+    select: {
+      key: true
+    },
+    orderBy: {
+      id: 'asc'
     }
   })
-
-  if (!progress && status === "answer") {
-    return res.status(400).json({ error: "You have not started this puzzle yet" })
-  }
-  if (progress && progress.success === true) {
-    return res.status(400).json({ error: "You have already solved this puzzle" })
-  }
-  if (progress && status === "start") {
-    return res.status(400).json({ error: "You have already started this puzzle" })
-  }
-  if (progress && progress.success === false && status === "answer") {
-    // compare answer
-    if (puzzle.solution !== answer.trim().toLowerCase()) {
-      return res.status(400).json({ error: "Incorrect answer" })
-    }
-    await prisma.userProgress.update({
+  const puzzleKeys = puzzles.map(puzzle => puzzle.key)
+  const finalAnswer = puzzleKeys.join('');
+  if (finalAnswer !== answer) {
+    return res.status(400).json({ error: "Wrong answer" })
+  } else {
+    await prisma.user.update({
       where: {
-        id: progress.id
+        id: user.id
       },
       data: {
-        success: true,
-        endTime: new Date(),
-        totalTime: Number(((new Date().getTime() - progress.startTime.getTime()) / 1000).toFixed(0))
+        totalTime: Number((((new Date()).getTime() - user.createdAt.getTime()) / 1000).toFixed(0)),
+        endAt: new Date()
       }
     })
-    return res.json({ success: true })
+    return res.status(200).json({ success: true })
   }
-  if (!progress && status === "start") {
-    if (puzzleNum > 1) {
-      // ensure the prev puzzle is done
-      const prevProgress = await prisma.userProgress.findFirst({
-        where: {
-          userId: user.id,
-          puzzleNum: (Number(puzzleNum) - 1),
-        }
-      })
-      if (!prevProgress || !prevProgress.success) {
-        return res.json({ error: "You have not solved the previous puzzle" });
-      }
-    }
-    try {
-      await prisma.userProgress.create({
-        data: {
-          userId: user.id,
-          puzzleNum: Number(puzzleNum),
-          startTime: new Date(),
-          success: false
-        }
-      })
-      return res.json({ success: true })
-    } catch (err) {
-      return res.status(500).json({ error: "Something went wrong" });
-    }
-  }
-  return res.status(400).json({ error: "Invalid request" })
 }
+
 
 export const adminPanelGetProgress = async (req: Request, res: Response) => {
   const user = (req as any).user;
   if (!user.isAdmin) {
     return res.status(401).json({ error: 'Unauthorized' })
   }
-  const { userId, puzzleNum, page } = req.query;
+  const { userId, username, page } = req.query;
   const limit = 10;
   const queryObj: any = {};
   let skip = 0;
   try {
     if (userId && typeof userId === 'string') {
-      queryObj.userId = Number(userId);
+      queryObj.id = Number(userId);
     }
-    if (puzzleNum && typeof puzzleNum === 'string') {
-      queryObj.puzzleNum = Number(puzzleNum);
+    if (username && typeof username === 'string') {
+      queryObj.username = username;
     }
     if (page && typeof page === 'string') {
       skip = (Number(page) - 1) * limit;
@@ -121,15 +93,22 @@ export const adminPanelGetProgress = async (req: Request, res: Response) => {
   } catch (e) {
     return res.status(400).json({ error: 'Invalid query' })
   }
-  const progress = await prisma.userProgress.findMany({
+  const progress = await prisma.user.findMany({
     where: queryObj,
     orderBy: {
-      startTime: 'desc'
+      createdAt: 'desc'
+    },
+    select: {
+      id: true,
+      username: true,
+      totalTime: true,
+      createdAt: true,
+      endAt: true,
     },
     skip,
     take: limit,
   })
-  const count = await prisma.userProgress.count({
+  const count = await prisma.user.count({
     where: queryObj
   })
   return res.json({

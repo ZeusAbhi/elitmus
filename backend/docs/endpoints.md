@@ -49,16 +49,10 @@
 ```
 - Response - 
 ```json
-[{
-  id: number,
-  userId: number,
-  puzzleNum: number,
-  success: boolean,
-  startTime: Date,
-  endTime: Date | null,
-  totalTime: number | null,
-  createdAt: Date
-}, {...}, {...}, ...]
+{
+  completed: boolean,
+  endTime: {0 or the time at which user completed the puzzle}
+}
 ```
 ### Update Progress (POST /users/progress)
 - Update route for updating user progress ( mark a puzzle as started or submit an attempt to a puzzle )
@@ -72,7 +66,6 @@
 ```json
 {
  puzzleNum: {puzzle number which is being updated },
- status: "answer" | "start",
  answer?: { user's answer if the status is answer }
 }
 ```
@@ -81,7 +74,7 @@ The status represents if the user is starting or answering a puzzle
 - Response - 
 ```json
 {
-  success: {boolean}
+  key: {number}
 }
 ```
 or 
@@ -94,19 +87,18 @@ or
 - Gets the top ten users for each puzzle
 - Response - 
 ```json
-{
-  1: [{
+[
+  {
     username: string,
-    userId: number,
-    totalTime: number
-  }, {...}, {...}],
-  2: [{...}, {...}, ...],
+    totalTime: number,
+  },
+  { ... },
   .
   .
   .
-}
+]
 ```
-Here 1,2 and the other keys are the puzzle numbers for each array of top 10 users
+This is an array of the top 10 users and their totalTimes
 
 ## Admin Routes
 ### Get all user progress (GET /admin/progress)
@@ -130,11 +122,9 @@ Here 1,2 and the other keys are the puzzle numbers for each array of top 10 user
   page: {page from query params or 1},
   progress: [{
     id: number,
-    userId: number,
-    puzzleNum: number,
-    success: boolean,
+    username: string,
     startTime: Date,
-    endTime: Date | null,
+    endAt: Date | null,
     totalTime: number | null,
     createdAt: Date
   }, {...}, {...}, ...],
