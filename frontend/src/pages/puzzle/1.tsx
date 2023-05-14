@@ -7,9 +7,9 @@ export default function PuzzleOne() {
       <div className="font-bold">subject: welcome to the company!</div>
       <br />
       Finally, welcome to the company! I hope you enjoy the work you do here. Remember to always be on time, and to be
-      respectful to your coworkers. Sometimes, you may have to work overtime, but that's okay!, Together, we can make this.
-      Don't forget to take breaks and have fun! As you can see, the company is growing quickly, and we need to hire more people to keep up with the demand. You'll
-      be tasked with a lot of things, but you'll do great!
+      respectful to your coworkers. Sometimes, you may have to work overtime, but that&apos;s okay!, Together, we can make this.
+      Don&apos;t forget to take breaks and have fun! As you can see, the company is growing quickly, and we need to hire more people to keep up with the demand. You'll
+      be tasked with a lot of things, but you&apos;ll do great!
       <br />
       <br />
       <div className="font-bold">- <span className="text-teal-700">CEO</span></div>

@@ -6,7 +6,7 @@ export default function PuzzleOne() {
     <div className="font-mono">
       The startup has been growing quickly,
       and the CEO has been hiring more and more people to keep up with the demand.
-      You've been tasked with helping out the new interns.
+      You&apos;ve been tasked with helping out the new interns.
       <br />
       Review this peice of code and help the interns fix the bug.
       <br />
