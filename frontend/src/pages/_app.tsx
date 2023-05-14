@@ -9,8 +9,8 @@ export default function App({ Component, pageProps }: AppProps) {
   const [parentRef, _] = useAutoAnimate()
   return <>
     <AuthProvider>
-      <div className='min-h-screen isolate bg-slate-100' ref={parentRef}>
-        <NextProgress height={5} color='rgb(51 65 85)' />
+      <div className='min-h-screen isolate' ref={parentRef}>
+        <NextProgress height={6} color='#581c87 ' />
         <Header />
         <Component {...pageProps} />
       </div>

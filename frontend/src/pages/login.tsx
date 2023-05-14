@@ -71,7 +71,7 @@ export default function Login() {
 
   return (
     <>
-      <div className="-z-10 inset-0 overflow-y-auto bg-slate-100 backdrop-brightness-90 text-gray-600" >
+      <div className="-z-10 inset-0 overflow-y-auto bg-gradient-radial to-white from-slate-200 backdrop-brightness-90 text-gray-600" >
         {error && <div className="bg-red-500 text-white flex justify-center break-words text-center">{error}</div>}
         <div className="flex items-center justify-center min-h-screen">
           <div className="w-full bg-white bg max-w-sm p-6 rounded-lg shadow-md mx-2">
@@ -113,7 +113,7 @@ export default function Login() {
                 />
                 <button
                   type="submit"
-                  className={`transition-colors w-full py-2 px-4 text-white ${loading ? "bg-slate-100 hover:bg-slate-200" : "bg-slate-500 hover:bg-slate-600"} rounded-md focus:outline-none`}
+                  className={`transition-colors w-full py-2 px-4 text-white ${loading ? "bg-slate-100 hover:bg-slate-200" : "bg-slate-600 after:content-[''] overflow-hidden after:opacity-0 isolate relative after:absolute after:-z-10 after:inset-0 after:bg-gradient-to-br after:from-purple-900 after:to-blue-900 cursor-pointer hover:after:opacity-75 after:transition-all"} rounded-md focus:outline-none`}
                   disabled={loading}
                 >
                   {loading ? <Spinner /> : "Login"}
@@ -139,7 +139,7 @@ export default function Login() {
                 />
                 <button
                   type="submit"
-                  className={`transition-colors w-full py-2 px-4 text-white ${loading ? "bg-slate-100 hover:bg-slate-200" : "bg-slate-500 hover:bg-slate-600"} rounded-md focus:outline-none`}
+                  className={`transition-colors w-full py-2 px-4 text-white ${loading ? "bg-slate-100 hover:bg-slate-200" : "bg-slate-600 after:content-[''] overflow-hidden after:opacity-0 isolate relative after:absolute after:-z-10 after:inset-0 after:bg-gradient-to-br after:from-purple-900 after:to-blue-900 cursor-pointer hover:after:opacity-75 after:transition-all"} rounded-md focus:outline-none`}
                   disabled={loading}
                 >
                   {loading ? <Spinner /> : "Register"}

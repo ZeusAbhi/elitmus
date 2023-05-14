@@ -7,15 +7,9 @@ type User = {
   token: string;
 };
 type UserProgress = {
-  id: number,
-  userId: number,
-  puzzleNum: number,
-  success: boolean,
-  startTime: Date,
-  endTime: Date | null,
-  totalTime: number | null,
-  createdAt: Date
-}[];
+  completed: boolean;
+  progress: Date;
+};
 
 type AuthContextValue = {
   user: User | null;
@@ -24,7 +18,7 @@ type AuthContextValue = {
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
   register: (username: string, password: string) => Promise<void>;
-  refetchUserProgress: () => Promise<void>;
+  refetchUserProgress: (user?: User) => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue>({
@@ -40,7 +34,7 @@ const AuthContext = createContext<AuthContextValue>({
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [userProgress, setUserProgress] = useState<[] | null>(null)
+  const [userProgress, setUserProgress] = useState<UserProgress | null>(null)
 
   /**
    * Pass in the username, password and type of user to login.
@@ -94,7 +88,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (typeof Storage === "undefined") return;
     if (user) {
-      refetchUserProgress();
+      refetchUserProgress(user);
       return;
     }
     try {
@@ -103,13 +97,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const userObj = JSON.parse(user);
       const token = userObj.token;
       const parsedToken: any = jwt(token);
-      if (parsedToken.exp < Date.now() / 1000) {
+      if (!parsedToken.exp || parsedToken.exp < Date.now() / 1000) {
         logout();
         return;
       }
       setUser(userObj);
       // this will also ensure that the token is correct
-      refetchUserProgress();
     } catch (err) {
       setError("Your past login data is corrupted, please login again");
       logout();
@@ -161,7 +154,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   * Update the user's progress from the backend
   * and update the userProgress object returned from the `useAuth` hook
   */
-  const refetchUserProgress = async () => {
+  const refetchUserProgress = async (user?: User) => {
     if (!user) return;
     await fetch(`${env.NEXT_PUBLIC_BACKENDURL}/users/progress`, {
       method: "GET",
@@ -169,12 +162,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${user.token}`
       }
-    }).then(res => res.json()).then(res => {
+    }).then(res => res.json()).then((res: any) => {
       if (res.error) {
         setError(res.error)
         logout()
       } else {
-        setUserProgress(res)
+        setUserProgress({
+          completed: res.completed,
+          progress: new Date(res.progress)
+        })
       }
     }).catch(_err => {
       setError("Login Failed, please try again");

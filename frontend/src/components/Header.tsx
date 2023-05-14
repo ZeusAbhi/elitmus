@@ -14,7 +14,7 @@ export default function Header() {
   }, [router])
   return (
     <>
-      <header className="hidden sm:flex flex-row md:px-4 px-2 bg-slate-800 text-white py-3 m-2 rounded-md shadow-md shadow-slate-300">
+      <header className="hidden sm:flex flex-row md:px-4 px-2 bg-gradient-to-br from-purple-900 to-blue-900 text-white py-3 m-2 rounded-md shadow-md shadow-slate-300">
         <div className="flex flex-1 items-center">
           <Link href="/">
             <h1 className="text-xl font-semibold">Puzzle Hunt</h1>
@@ -38,7 +38,7 @@ export default function Header() {
           )}
         </div>
       </header>
-      <header ref={parentRef} className="flex flex-col gap-2 sm:hidden bg-slate-800 text-white py-3 m-2 shadow-md shadow-gray-400 rounded-md">
+      <header ref={parentRef} className="flex flex-col gap-2 sm:hidden bg-gradient-to-br from-purple-900 to-blue-900 text-white py-3 m-2 shadow-md shadow-gray-400 rounded-md">
         <div className="flex gap-2 flex-row h-full px-2">
           <span className="cursor-pointer" onClick={() => {
             setExpanded(!expanded)

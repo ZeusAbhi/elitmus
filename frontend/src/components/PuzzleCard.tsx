@@ -1,11 +1,11 @@
 import type { Puzzle } from "@/puzzles";
 import Link from "next/link";
 
-type PuzzleCardType = Puzzle & { active: boolean }
+type PuzzleCardType = Puzzle
 
 export default function PuzzleCard({ puzzle }: { puzzle: PuzzleCardType }) {
   return (
-    <div className={`${puzzle.active ? "bg-teal-700/10 border-teal-700 hover:bg-teal-700/20" : "bg-slate-100/50 border-slate-400 hover:bg-slate-200/80"} transition-colors md:w-4/5 w-full flex px-2 py-4 border rounded-md border-dashed flex-col`}>
+    <div className={`bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-100/80 transition-colors duration-200 md:w-4/5 w-full flex px-2 py-4 border rounded-md flex-col`}>
       <div className="font-thin text-sm text-neutral-800" aria-hidden>
         {puzzle.number}
       </div>
@@ -16,8 +16,8 @@ export default function PuzzleCard({ puzzle }: { puzzle: PuzzleCardType }) {
         {puzzle.shortDescription}
       </div>
       <Link href={`/puzzle/${puzzle.id}`}>
-        <div className={`${puzzle.active ? "bg-teal-900 hover:bg-teal-950" : "bg-slate-600 hover:bg-slate-700"} cursor-pointer transition-colors p-2 text-white font-mono font-bold rounded-md mt-2`}>
-          {puzzle.active ? "Completed" : "Go"}
+        <div className={`bg-slate-600 after:content-[''] overflow-hidden after:opacity-0 isolate relative after:absolute after:-z-10 after:inset-0 after:bg-gradient-to-br after:from-purple-900 after:to-blue-900 cursor-pointer hover:after:opacity-75 after:transition-all p-2 text-white font-mono font-bold rounded-md mt-2`}>
+          Go
         </div>
       </Link>
     </div>
