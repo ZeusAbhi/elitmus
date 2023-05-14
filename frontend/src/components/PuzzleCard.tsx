@@ -5,7 +5,7 @@ type PuzzleCardType = Puzzle
 
 export default function PuzzleCard({ puzzle }: { puzzle: PuzzleCardType }) {
   return (
-    <div className={`bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-100/80 transition-colors duration-200 md:w-4/5 w-full flex px-2 py-4 border rounded-md flex-col`}>
+    <div className={`bg-white backdrop-blur-sm border-slate-200 hover:border-slate-300 hover:bg-slate-200/20 transition-all duration-200 md:w-4/5 w-full flex px-2 py-4 border rounded-md flex-col`}>
       <div className="font-thin text-sm text-neutral-800" aria-hidden>
         {puzzle.number}
       </div>
