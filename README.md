@@ -1,38 +1,5 @@
 # Assignment - Puzzle Application
 
-## Todo Board - 
-[x] Init Proj
-
-[x] Setup Deployments
-
-[x] MySQL Connection
-
-[x] Auth and User schemas
-
-[x] Basics
-- Header
-- Footer
-
-[x] Login Page
-
-[x] Home Page
-
-[x] Dashboard Page
-- List of puzzles and continue/start button
-
-[x] Puzzle Generalised page and components
-- Generalise puzzle route with protection (only logged in users can access)
-
-[x] Leaderboard
-
-[x] Puzzle
-
-[x] Admin panel
-
-[x] Animations
-
-[x] Titles for each page
-
 ## Problem Statement
 
 You need to design an interactive puzzle that can be solved on an online website.
@@ -68,4 +35,71 @@ These requirements are not mandatory but nice to have
 - Data analysis using different graphs or tables
 - User Leaderboard
 
+# Progress 
 
+## Features Implemented
+[x] MySQL DB and schemas
+
+[x] Auth and User schemas
+
+[x] Basics
+
+[x] Login Page
+
+[x] Home Page
+
+[x] Dashboard Page
+- List of puzzles and start button
+
+[x] Leaderboard
+
+[x] Puzzles
+
+[x] Admin panel
+
+[x] Animations
+
+## Features possible to add with some more time
+[ ] A way to add new puzzles (similar to [This](https://github.com/lohit244/naps-website) project of mine)
+
+[ ] Tracking and analytics for the user answers at a per-puzzle level
+
+[ ] Using something like node-mailer to verify the email and also implement `forgot password` funtionality
+
+and maybe some others...
+
+# Info for the submission -
+
+- Hosting link - [Frontend Here](https://elitmus-zeta.vercel.app) and [Backend here](https://elitmus-production.up.railway.app)
+
+- Admin ID & password
+    - username: admin
+    - password: password
+
+## Soft skills tested and the logic behind them.
+- Puzzle 01
+    - Makes the player look through a big piece of text to find characters that stick out.
+    - Tests their attention to detail.
+
+<br/>
+
+- Puzzle 02
+    - Forces the player to make a tough decision.
+    - Tests their leadership and how they treat others when the finger is pointed at them.
+
+<br/>
+
+- Puzzle 03
+    - Tests the player's ability to think of edge cases through a simple programming problem.
+
+<br/>
+
+- Puzzle 04
+    - Tests how well the player can remember/recall information.
+    - Also tests their attentiveness as the information being asked is not highlighted in any way and is at the bottom of the index page.
+
+<br/>
+
+- Puzzle 05
+    - I wanted this one to be a harder version of the previous problems, so this again tests the player's attention to detail.
+    - But this time, the flag is hidden in the page's source code, forcing the player to think outside of the box.
