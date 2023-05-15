@@ -1,9 +1,15 @@
 import { GetStaticProps } from "next";
 import { env } from "@/env.mjs"
+import Head from "next/head";
 
 export default function Leaderboard({ leaderboard }: { leaderboard: { username: string, totalTime: number }[] }) {
   return (
     <>
+      <Head>
+        <title>Leaderboard | Puzzle Hunt</title>
+        <meta name="description" content="Puzzle Hunt for eLitmus Summer Internship" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className="flex flex-col items-center min-h-screen">
         <h1 className="text-xl font-bold my-4">Leaderboard</h1>
         <p className="font-light text-center">This leaderboard is updated every 10 mins.</p>

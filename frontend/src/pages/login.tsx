@@ -1,5 +1,6 @@
 import { Spinner } from "@/components/Spinner";
 import { useAuth } from "@/context/authContext"
+import Head from "next/head";
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react";
 
@@ -37,16 +38,23 @@ export default function Login() {
   }, [user])
 
   if (user) {
-    return <div className="h-screen w-full text-bold flex items-center justify-center">
-      <div>
-        <p>
-          You are logged in.
-          <br />
-          Redirecting to dashboard.
-        </p>
-        <Spinner />
+    return <>
+      <Head>
+        <title>Dashboard | Puzzle Hunt</title>
+        <meta name="description" content="Puzzle Hunt for eLitmus Summer Internship" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className="h-screen w-full text-bold flex items-center justify-center">
+        <div>
+          <p>
+            You are logged in.
+            <br />
+            Redirecting to dashboard.
+          </p>
+          <Spinner />
+        </div>
       </div>
-    </div>
+    </>
   }
   const handleTabChange = (tab: "login" | "register") => {
     setActiveTab(tab);
@@ -80,6 +88,11 @@ export default function Login() {
 
   return (
     <>
+      <Head>
+        <title>Login | Puzzle Hunt</title>
+        <meta name="description" content="Puzzle Hunt for eLitmus Summer Internship" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className="-z-10 inset-0 overflow-y-auto bg-gradient-radial to-white from-slate-200 backdrop-brightness-90 text-gray-600" >
         {error && <div className="bg-red-500 text-white flex justify-center break-words text-center">{error}</div>}
         <div className="flex items-center justify-center min-h-screen">

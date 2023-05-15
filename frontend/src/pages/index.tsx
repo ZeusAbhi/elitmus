@@ -1,11 +1,17 @@
 import { useAuth } from "@/context/authContext";
 import Link from "next/link";
 import Image from "next/image";
+import Head from "next/head";
 
 export default function Home() {
   const { user } = useAuth();
   return (
     <main>
+      <Head>
+        <title>Puzzle Hunt</title>
+        <meta name="description" content="Puzzle Hunt for eLitmus Summer Internship" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className="flex flex-col items-center z-10 py-4 min-h-screen justify-center ">
         <h1 className="text-xl font-bold text-center">Welcome to the </h1>
         <div className="text-4xl font-black text-transparent bg-woow">Puzzle Hunt!</div>

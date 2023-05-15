@@ -8,6 +8,7 @@ import { env } from "@/env.mjs"
 import Confetti from "react-confetti"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { useWindowSize } from "react-use"
+import Head from "next/head"
 
 export default function Dashboard() {
   const { user, userProgress, logout, refetchUserProgress } = useAuth()
@@ -43,10 +44,17 @@ export default function Dashboard() {
 
 
   if (!user || !userProgress) {
-    return <div className="flex flex-col h-screen w-full items-center justify-center">
-      <p>Please login.<br /> </p>
-      <p>Redirecting to login page...</p>
-    </div>
+    return <>
+      <Head>
+        <title>Dashboard | Puzzle Hunt</title>
+        <meta name="description" content="Puzzle Hunt for eLitmus Summer Internship" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className="flex flex-col h-screen w-full items-center justify-center">
+        <p>Please login.<br /> </p>
+        <p>Redirecting to login page...</p>
+      </div>
+    </>
   }
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,6 +84,11 @@ export default function Dashboard() {
   }
 
   return <div ref={parentRef2}>
+    <Head>
+      <title>Dashboard | Puzzle Hunt</title>
+      <meta name="description" content="Puzzle Hunt for eLitmus Summer Internship" />
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
     <ul className="animation-sq">
       <li />
       <li />

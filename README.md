@@ -9,31 +9,27 @@
 
 [x] Auth and User schemas
 
-[x] Login Page
+[x] Basics
 - Header
 - Footer
-- Shows just a login to get started
 
-[ ] Home Page
-- Header
-- Footer
-- Shows just a login to get started
+[x] Login Page
+
+[x] Home Page
 
 [x] Dashboard Page
 - List of puzzles and continue/start button
 
-[ ] Puzzle Generalised page and components
+[x] Puzzle Generalised page and components
 - Generalise puzzle route with protection (only logged in users can access)
 
-[ ] Leaderboard
+[x] Leaderboard
 
-[ ] Puzzle
+[x] Puzzle
 
-[ ] Time tracking
+[x] Admin panel
 
-[ ] Admin panel
-
-[ ] Animations
+[x] Animations
 
 [ ] Titles for each page
 
@@ -71,3 +67,5 @@ These requirements are not mandatory but nice to have
 - User analytics (eg - time taken by each user for every step, solution accuracy, etc.) depending on your puzzle should be stored and shown in the admin dashboard
 - Data analysis using different graphs or tables
 - User Leaderboard
+
+
