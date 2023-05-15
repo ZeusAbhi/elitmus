@@ -38,7 +38,7 @@ export default function Home() {
       <div className="flex flex-col min-h-screen justify-around items-center mx-2">
         <div className="flex flex-col gap-2">
           <h1 className="text-2xl font-bold text-center">Join the startup!</h1>
-          <h2 className="text-center text-xl font-light">Meet the CEO - John Doe</h2>
+          <h2 className="text-center text-xl font-bold">Meet the CEO </h2>
           <p className="text-center text-xl font-light">John Doe is the CEO of a startup that is trying to make a name for itself in the world of tech. </p>
           <p className="text-center text-xl font-light">Join in and you will definitely have fun as each day brings a new challenge.</p>
         </div>
