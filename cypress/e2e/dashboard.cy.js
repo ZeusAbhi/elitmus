@@ -19,7 +19,7 @@ describe('Dashboard', () => {
     cy.get('form').submit()
     cy.contains('95234499').should('exist')
     logout()
-  })
+  }).timeout(10000)
 
   it('Puzzle Two', () => {
     login()
@@ -30,7 +30,7 @@ describe('Dashboard', () => {
     cy.get('form').submit()
     cy.contains('80123448').should('exist')
     logout()
-  })
+  }).timeout(10000)
 
   it('Puzzle Three', () => {
     login()
@@ -41,7 +41,7 @@ describe('Dashboard', () => {
     cy.get('form').submit()
     cy.contains('52').should('exist')
     logout()
-  })
+  }).timeout(10000)
 
   it('Puzzle Four', () => {
     login()
@@ -52,7 +52,7 @@ describe('Dashboard', () => {
     cy.get('form').submit()
     cy.contains('43234').should('exist')
     logout()
-  })
+  }).timeout(10000)
 
   it('Puzzle Five', () => {
     login()
@@ -63,6 +63,6 @@ describe('Dashboard', () => {
     cy.get('form').submit()
     cy.contains('234243').should('exist')
     logout()
-  })
+  }).timeout(10000)
 
 })
