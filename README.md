@@ -103,3 +103,55 @@ and maybe some others...
 - Puzzle 05
     - I wanted this one to be a harder version of the previous problems, so this again tests the player's attention to detail.
     - But this time, the flag is hidden in the page's source code, forcing the player to think outside of the box.
+
+
+# How to run locally
+
+## Install Dependencies
+
+```bash
+# install the deps for the root dir
+npm install -D
+
+# install the deps for frontend
+cd frontend
+npm install -D
+
+# get back to root dir
+cd../
+
+# install deps for the backend
+cd backend
+npm install -D
+```
+## Setup the env vars
+
++ Both the frontend and backend have an .env.example
++ Create a similar .env for both the folders
+
+
+
+## Start the backend
+```bash
+cd backend
+npm run dev
+# or for not running in dev mode
+# npm run start
+```
+
+## Start the frontend
+```bash
+cd frontend
+npm run dev
+
+# or for not running in dev mode
+# npm run build
+# npm run start
+```
+
+## Run the tests
+```bash
+# in the root dir
+npm run test
+```
++ This should start the familiar cypress window to run the tests
