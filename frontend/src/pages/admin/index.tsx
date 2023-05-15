@@ -71,7 +71,7 @@ export default function AdminPanel() {
     <div className="flex flex-col items-center">
       <h1 className="my-4 font-bold text-2xl">Admin Panel</h1>
 
-      <div className="mx-2 w-full">
+      <div className="px-2 w-full">
         <div onClick={() => { setExpanded(!expanded) }} className="bg-teal-700 max-w-sm text-center mx-auto w-full py-2 gap-2 px-2 rounded-md text-white cursor-pointer mb-2">
           {expanded ? "Hide" : "Show"} Options
         </div>
