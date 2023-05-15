@@ -17,7 +17,7 @@ export default function Home() {
           <Link href="/leaderboard" className="cursor-pointer">Leaderboard</Link>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row min-h-screen justify-around items-center mx-2 gap-2">
+      <div className="flex flex-col lg:flex-row min-h-screen justify-around items-center mx-2 gap-2">
         <div className="flex flex-col items-center justify-center gap-2">
           <h1 className="text-2xl font-bold text-center">Rules</h1>
           <ul className="flex flex-col gap-2">
@@ -33,7 +33,7 @@ export default function Home() {
             <li>Your final score is the total time taken to solve the final puzzle</li>
           </ul>
         </div>
-        <Image alt="screenshot" src="/images/dash.png" className="rounded-md p-2 border border-slate-200" width={720} height={720} />
+        <Image alt="screenshot" src="/images/dash.png" className="rounded-md p-2 border border-slate-200" width={500} height={500} />
       </div>
       <div className="flex flex-col min-h-screen justify-around items-center mx-2">
         <div className="flex flex-col gap-2">
