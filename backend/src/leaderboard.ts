@@ -7,6 +7,9 @@ export const topTen = async (req: Request, res: Response) => {
     where: {
       totalTime: {
         not: 0
+      },
+      endAt: {
+        not: null
       }
     },
     take: 10,
