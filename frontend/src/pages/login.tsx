@@ -20,9 +20,11 @@ export default function Login() {
   const [registerForm, setRegisterForm] = useState<{
     password: string;
     username: string;
+    email: string;
   }>({
     password: "",
     username: "",
+    email: "",
   });
 
   useEffect(() => {
@@ -81,7 +83,7 @@ export default function Login() {
   const handleRegisterSubmit = (e: any) => {
     e.preventDefault();
     setLoading(true)
-    register(registerForm.username, registerForm.password).then(() => {
+    register(registerForm.username, registerForm.email, registerForm.password).then(() => {
       setLoading(false)
     });
   };
@@ -149,6 +151,14 @@ export default function Login() {
                   placeholder="Username"
                   className="w-full mb-2 p-2 rounded-md focus:outline-none"
                   value={registerForm.username}
+                  onChange={handleRegisterInputChange}
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  className="w-full mb-2 p-2 rounded-md focus:outline-none"
+                  value={registerForm.email}
                   onChange={handleRegisterInputChange}
                 />
                 <input

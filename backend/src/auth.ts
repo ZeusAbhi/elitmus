@@ -32,18 +32,20 @@ export const login = async (req: Request, res: Response) => {
 
 export const register = async (req: Request, res: Response) => {
   try {
-    let { username, password } = req.body
-    if (!username || !password) {
+    let { username, email, password } = req.body
+    if (!username || !password || !email) {
       return res.status(400).json({ error: 'Missing username or password' })
     }
-    if (typeof username !== 'string' || typeof password !== 'string') {
+    if (typeof username !== 'string' || typeof password !== 'string' || typeof email !== 'string') {
       return res.status(400).json({ error: 'Invalid username or password' })
     }
     username = username.toLowerCase();
+    email = email.toLowerCase();
     const hashedPassword = await bcrypt.hash(password, 10)
     const user = await prisma.user.create({
       data: {
         username,
+        email,
         password: hashedPassword
       }
     })

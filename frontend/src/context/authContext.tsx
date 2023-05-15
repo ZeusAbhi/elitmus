@@ -17,7 +17,7 @@ type AuthContextValue = {
   error: string | null;
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
-  register: (username: string, password: string) => Promise<void>;
+  register: (username: string, email: string, password: string) => Promise<void>;
   refetchUserProgress: (user?: User) => Promise<void>;
 };
 
@@ -117,12 +117,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
    * It will also log the user in if the request is successful
    * and update the user object returned from the `useAuth` hook
    */
-  const register = async (username: string, password: string) => {
+  const register = async (username: string, email: string, password: string) => {
     // TODO: data validation
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, password, email }),
     };
     try {
       await fetch(`${env.NEXT_PUBLIC_BACKENDURL}/users/register`, requestOptions)
