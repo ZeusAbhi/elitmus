@@ -11,6 +11,7 @@
 ```json
 {
   "username": {username},
+  "email": {email},
   "password": {password}
 }
 ```
@@ -51,7 +52,7 @@
 ```json
 {
   completed: boolean,
-  endTime: {0 or the time at which user completed the puzzle}
+  progress: {0 or the time at which user completed the puzzle}
 }
 ```
 ### Update Progress (POST /users/progress)
@@ -106,7 +107,7 @@ This is an array of the top 10 users and their totalTimes
 ```json
 {
   userId= {optional}
-  puzzleNum={optional}
+  username={optional}
   page={optional}
 }
 ```
@@ -123,7 +124,7 @@ This is an array of the top 10 users and their totalTimes
   progress: [{
     id: number,
     username: string,
-    startTime: Date,
+    createdAt: Date,
     endAt: Date | null,
     totalTime: number | null,
     createdAt: Date
