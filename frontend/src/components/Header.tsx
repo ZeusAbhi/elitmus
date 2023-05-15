@@ -27,9 +27,10 @@ export default function Header() {
               <Link href="/dashboard">
                 <div className="px-2 py-2 bg-slate-100 hover:bg-slate-200 transition-colors rounded-md text-slate-800">{user.username + "'"}s Dashboard</div>
               </Link>
-              <Link href="/admin">
+              {user.username === "admin" && <Link href="/admin">
                 <div className="cursor-pointer font-semibold mx-4">Admin Panel</div>
               </Link>
+              }
               <div className="cursor-pointer font-semibold" onClick={logout}>Logout</div>
             </>
           ) : (
