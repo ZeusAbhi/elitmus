@@ -17,7 +17,7 @@ export default function Home() {
           <Link href="/leaderboard" className="cursor-pointer">Leaderboard</Link>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row min-h-screen justify-around items-center mx-2">
+      <div className="flex flex-col md:flex-row min-h-screen justify-around items-center mx-2 gap-2">
         <div className="flex flex-col items-center justify-center gap-2">
           <h1 className="text-2xl font-bold text-center">Rules</h1>
           <ul className="flex flex-col gap-2">
