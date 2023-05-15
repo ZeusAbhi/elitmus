@@ -14,7 +14,7 @@ export default function Home() {
       </Head>
       <div className="flex flex-col items-center z-10 py-4 min-h-screen justify-center ">
         <h1 className="text-xl font-bold text-center">Welcome to the </h1>
-        <div className="text-4xl font-black text-transparent bg-woow">Puzzle Hunt!</div>
+        <div className="text-4xl sm:text-6xl md:text-8xl font-black text-transparent bg-woow">Puzzle Hunt!</div>
         <p className="text-center text-xl font-light">This is a Treasure Hunt made for the E-Litmus Assignment Round | eLitmus Summer Intern <br />
           by <a href="https://lohitaksha.com" className="text-teal-700 hover:text-teal-800">Lohitaksha Malhotra</a> aka me :).</p>
         <div className="flex flex-col items-center justify-center mt-4 gap-2">
