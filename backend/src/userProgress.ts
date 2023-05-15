@@ -88,6 +88,7 @@ export const adminPanelGetProgress = async (req: Request, res: Response) => {
       queryObj.username = username;
     }
     if (page && typeof page === 'string') {
+      if (Number(page) < 1) return res.status(400).json({ error: 'Invalid page' });
       skip = (Number(page) - 1) * limit;
     }
   } catch (e) {
