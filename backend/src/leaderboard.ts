@@ -4,6 +4,11 @@ import { Request, Response } from "express"
 
 export const topTen = async (req: Request, res: Response) => {
   const users = await prisma.user.findMany({
+    where: {
+      totalTime: {
+        not: 0
+      }
+    },
     take: 10,
     select: {
       username: true,

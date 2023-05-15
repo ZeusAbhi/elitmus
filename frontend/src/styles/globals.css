@@ -172,3 +172,19 @@ html{
   animation: bg-scrolling-reverse 0.92s infinite;
   animation-timing-function: linear;
 }
+
+@keyframes bgWoow {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+
+.bg-woow {
+  background-image: repeating-linear-gradient(-45deg, rgba(0 0 0 / 1), rgba(0 0 0 / 1) 2rem, rgba(88 28 135 / 1), 2rem, rgba(88 28 135 / 1) 5rem);
+  background-size: 200% 100%;
+  background-clip: text;
+  animation: bgWoow 5s linear infinite;
+}
