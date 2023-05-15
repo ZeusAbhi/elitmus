@@ -8,7 +8,7 @@ export default function Leaderboard({ leaderboard }: { leaderboard: { username: 
         <h1 className="text-xl font-bold my-4">Leaderboard</h1>
         <p className="font-light text-center">This leaderboard is updated every 10 mins.</p>
 
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div className="bg-white shadow overflow-hidden mx-2 rounded-md">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-100">
               <tr>
