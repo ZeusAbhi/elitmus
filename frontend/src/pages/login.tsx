@@ -1,7 +1,7 @@
 import { Spinner } from "@/components/Spinner";
 import { useAuth } from "@/context/authContext"
 import { useRouter } from "next/router"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Login() {
   const { user, error, login, register } = useAuth();
@@ -24,10 +24,19 @@ export default function Login() {
     username: "",
   });
 
+  useEffect(() => {
+    let t: NodeJS.Timeout;
+    if (user) {
+      t = setTimeout(() => {
+        router.push('/dashboard')
+      }, 2000)
+    }
+    return () => {
+      clearTimeout(t)
+    }
+  }, [user])
+
   if (user) {
-    setTimeout(() => {
-      router.push('/dashboard')
-    }, 2000)
     return <div className="h-screen w-full text-bold flex items-center justify-center">
       <div>
         <p>

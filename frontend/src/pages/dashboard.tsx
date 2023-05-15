@@ -39,7 +39,7 @@ export default function Dashboard() {
       if (!t) return;
       clearTimeout(t)
     }
-  }, [user, router])
+  }, [user])
 
 
   if (!user || !userProgress) {
