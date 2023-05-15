@@ -23,6 +23,7 @@ html{
   width: 20px;
   height: 20px;
   bottom: -150px;
+  @apply border-2
 }
 
 .animation-sq li:nth-child(1){
@@ -31,8 +32,8 @@ html{
   width: 80px;
   height: 80px;
   animation-delay: 0s;
-  animation: animate 25s linear infinite;
-  @apply bg-red-500;
+  animation: animate 23s linear infinite;
+  @apply bg-red-500 border-red-600;
 }
 
 
@@ -43,8 +44,8 @@ html{
   height: 20px;
   animation-delay: 2s;
   animation-duration: 12s;
-  animation: animate 25s linear infinite;
-  @apply bg-green-500;
+  animation: animate 15s linear infinite;
+  @apply bg-green-500 border-green-600;
 }
 
 .animation-sq li:nth-child(3){
@@ -53,8 +54,8 @@ html{
   height: 20px;
   top: 30%;
   animation-delay: 4s;
-  animation: animate 25s linear infinite;
-  @apply bg-blue-500;
+  animation: animate 30s linear infinite;
+  @apply bg-blue-500 border-blue-600;
 }
 
 .animation-sq li:nth-child(4){
@@ -64,8 +65,8 @@ html{
   height: 60px;
   animation-delay: 0s;
   animation-duration: 18s;
-  animation: animate 25s linear infinite;
-  @apply bg-yellow-500;
+  animation: animate 19s linear infinite;
+  @apply bg-yellow-500 border-yellow-600;
 }
 
 .animation-sq li:nth-child(5){
@@ -73,8 +74,8 @@ html{
   width: 20px;
   height: 20px;
   animation-delay: 0s;
-  animation: animate 25s linear infinite;
-  @apply bg-indigo-500;
+  animation: animate 11s linear infinite;
+  @apply bg-indigo-500 border-indigo-600;
 }
 
 .animation-sq li:nth-child(6){
@@ -82,8 +83,8 @@ html{
   width: 110px;
   height: 110px;
   animation-delay: 3s;
-  animation: animate 25s linear infinite;
-  @apply bg-pink-500;
+  animation: animate 12s linear infinite;
+  @apply bg-pink-500 border-pink-600;
 }
 
 .animation-sq li:nth-child(7){
@@ -92,8 +93,8 @@ html{
   top: 70%;
   height: 150px;
   animation-delay: 7s;
-  animation: animate 25s linear infinite;
-  @apply bg-purple-500;
+  animation: animate 7s linear infinite;
+  @apply bg-purple-500 border-purple-600;
 }
 
 .animation-sq li:nth-child(8){
@@ -103,8 +104,8 @@ html{
   top: 10%;
   animation-delay: 15s;
   animation-duration: 45s;
-  animation: animate 25s linear infinite;
-  @apply bg-gray-500;
+  animation: animate 11s linear infinite;
+  @apply bg-gray-500 border-gray-600;
 }
 
 .animation-sq li:nth-child(9){
@@ -114,7 +115,7 @@ html{
   animation-delay: 2s;
   animation-duration: 35s;
   animation: animate 25s linear infinite;
-  @apply bg-green-500;
+  @apply bg-green-500 border-green-600;
 }
 
 .animation-sq li:nth-child(10){
@@ -123,8 +124,8 @@ html{
   height: 150px;
   animation-delay: 0s;
   animation-duration: 8s;
-  animation: animate 25s linear infinite;
-  @apply bg-yellow-500;
+  animation: animate 13s linear infinite;
+  @apply bg-yellow-500 border-yellow-600;
 }
 
 @keyframes animate {

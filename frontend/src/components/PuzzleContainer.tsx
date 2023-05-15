@@ -72,7 +72,7 @@ const PuzzleContainer = ({ children, puzzleNum }: { children: ReactNode, puzzleN
   }
 
   return (
-    <div className="flex flex-col items-center z-10 bg-whoosh py-4">
+    <div className="flex flex-col items-center z-10 bg-whoosh py-4 min-h-screen">
       <div className="lg:max-w-xl md:max-w-lg max-w-sm w-full mx-2 flex flex-col text-justify my-2 gap-2 bg-white bg-opacity-5 backdrop-blur-sm sm:p-4 p-2 rounded-md border border-slate-200 hover:border-slate-300">
         {(err) && (
           <div className="flex flex-col bg-amber-700 mx-2 rounded-md px-2 text-white font-light items-center text-center text-sm p-2">
