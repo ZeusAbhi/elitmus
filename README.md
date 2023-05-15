@@ -31,7 +31,7 @@
 
 [x] Animations
 
-[ ] Titles for each page
+[x] Titles for each page
 
 ## Problem Statement
 
