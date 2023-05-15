@@ -74,18 +74,18 @@ export default function Login() {
       <div className="-z-10 inset-0 overflow-y-auto bg-gradient-radial to-white from-slate-200 backdrop-brightness-90 text-gray-600" >
         {error && <div className="bg-red-500 text-white flex justify-center break-words text-center">{error}</div>}
         <div className="flex items-center justify-center min-h-screen">
-          <div className="w-full bg-white bg max-w-sm p-6 rounded-lg shadow-md mx-2">
+          <div className="w-full bg-white/80 backdrop-blur-sm bg max-w-sm p-6 rounded-lg shadow-md mx-2">
             <div className="gap-2 mb-4 flex flex-col items-center">
               <ul className="flex flex-1 w-full">
                 <li
-                  className={`flex-1 py-1 text-center cursor-pointer ${activeTab === "login" ? "text-slate-500 bg-gray-100" : ""
+                  className={`flex-1 py-1 text-center cursor-pointer rounded-md ${activeTab === "login" ? "text-slate-500 bg-gray-200" : ""
                     }`}
                   onClick={() => handleTabChange("login")}
                 >
                   Login
                 </li>
                 <li
-                  className={`flex-1 py-1 text-center cursor-pointer ${activeTab === "register" ? "text-slate-500 bg-gray-100" : ""
+                  className={`flex-1 py-1 text-center cursor-pointer rounded-md ${activeTab === "register" ? "text-slate-500 bg-gray-200" : ""
                     }`}
                   onClick={() => handleTabChange("register")}
                 >
