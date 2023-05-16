@@ -129,6 +129,23 @@ npm install -D
 + Both the frontend and backend have an .env.example
 + Create a similar .env for both the folders
 
+## Setup the MySQL db
+
++ This will use the db connection string setup in the .env for the backend
+
+```bash
+cd backend
+
+# Run prisma migrate
+yarn prisma migrate dev --name init
+# or
+# npx prisma migrate dev --name init
+
+# Prisma db push ( required after every change to the schema )
+yarn prisma db push
+# or 
+# npx prisma db push
+```
 
 
 ## Start the backend
