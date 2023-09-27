@@ -16,7 +16,7 @@ export default function Home() {
         <h1 className="text-xl font-bold text-center">Welcome to the </h1>
         <div className="text-4xl sm:text-6xl md:text-8xl font-black text-transparent bg-woow">Puzzle Hunt!</div>
         <p className="text-center text-xl font-light">This is a Treasure Hunt made for the E-Litmus Assignment Round | eLitmus Summer Intern <br />
-          by <a href="https://lohitaksha.com" className="text-teal-700 hover:text-teal-800">Lohitaksha Malhotra</a> aka me :).</p>
+          by <a href="https://www.linkedin.com/in/abhinav-tushar-36149521b/" className="text-teal-700 hover:text-teal-800">Abhinav Tushar</a> aka me :).</p>
         <div className="flex flex-col items-center justify-center mt-4 gap-2">
           {user && <Link href="/dashboard" className="cursor-pointer bg-slate-900 px-7 py-2 rounded-md transition-colors text-white hover:bg-slate-800">Dashboard</Link>}
           <Link href="/login" className="cursor-pointer bg-purple-900 px-4 py-2 rounded-md text-white transition-colors hover:bg-purple-800">Start the Hunt</Link>
